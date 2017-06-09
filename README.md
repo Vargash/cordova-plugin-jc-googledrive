@@ -160,6 +160,23 @@ window.plugins.gdrive.requestSync(returnFiles,
 ```
 The success callback will return a JSON object. The attribute `flist` will hold an array with the files found on user's application folder on Drive.
 
+#### changeAccount
+
+The `changeAccount` function closes the auth session, forcing the user to re-select an account. This can be useful the permit account change or disconnection from the app.
+
+```javascript
+window.plugins.gdrive.endSession(
+   function(res){
+    console.log(res);
+   },
+   function(err){
+    console.log(err);
+   }
+);
+```
+The success callback implies a succesfull termination of the session.
+The function returns an error if no session is active, or if the user cancel the subsequent account selection window.
+
 ## Contribution
 
 You are more than welcome to provide features and help with the development.

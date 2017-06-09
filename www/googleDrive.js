@@ -20,6 +20,10 @@ GoogleDrive.prototype.requestSync = function(returnFiles,successCallback,errorCa
     cordova.exec(successCallback,errorCallback,"GoogleDrive","requestSync",[returnFiles]);
 };
 
+GoogleDrive.prototype.changeAccount = function(successCallback,errorCallback){
+    cordova.exec(successCallback,errorCallback,"GoogleDrive","changeAccount",[]);
+};
+
 GoogleDrive.install = function () {
     if (!window.plugins) {
         window.plugins = {};
