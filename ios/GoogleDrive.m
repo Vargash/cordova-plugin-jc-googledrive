@@ -30,15 +30,15 @@ static NSString *kAuthorizerKey = @"";
 
 - (void)changeAccount:(CDVInvokedUrlCommand*)command {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.authorization.canAuthorize){
+        // if(self.authorization.canAuthorize){
             [self setGtmAuthorization:nil];
                 [self runSigninThenHandler:command onComplete:^{
                     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Session closed"] callbackId:command.callbackId];
                 }];
-        } else{
-            // NSLog(@"No session to terminate");
-            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No session to terminate"] callbackId:command.callbackId];
-        }
+        // } else{
+        //     // NSLog(@"No session to terminate");
+        //     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No session to terminate"] callbackId:command.callbackId];
+        // }
     });
 }
 
