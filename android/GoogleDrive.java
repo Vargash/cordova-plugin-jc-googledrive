@@ -55,6 +55,7 @@ public class GoogleDrive extends CordovaPlugin
     private String localFPath;
     private boolean appFolder, listOfFiles;
     private CallbackContext mCallbackContext;
+    private boolean reconnecting = false;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -178,15 +179,22 @@ public class GoogleDrive extends CordovaPlugin
                 @Override
                 public void run() {
                     if (mGoogleApiClient.isConnected()) {
-                        mGoogleApiClient.clearDefaultAccountAndReconnect();
+                        reconnecting = true;
+                        changeAccount();
                     } else {
-                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "No session to terminate"));
+                        reconnecting = false;
+                        mGoogleApiClient.connect();
+                        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "No session to terminate"));
                     }
                 }
             });
             return true;
         }
         return false;
+    }
+
+    private void changeAccount() {
+        mGoogleApiClient.clearDefaultAccountAndReconnect();
     }
 
     private void downloadFile(final String destPath, String fileid) {
@@ -439,6 +447,7 @@ public class GoogleDrive extends CordovaPlugin
     @Override
     public void onConnected(Bundle connectionHint) {
         Log.i(TAG, "API client connected.");
+        Log.i(TAG, "Action: " + mAction);
         if (mAction.equals("downloadFile")) {
             downloadFile(toLocalDest, fileid);
         } else if (mAction.equals("uploadFile")) {
@@ -449,6 +458,12 @@ public class GoogleDrive extends CordovaPlugin
             deleteFile(fileid);
         } else if (mAction.equals("requestSync")) {
             requestSync(listOfFiles);
+        } else if (mAction.equals("changeAccount")) {
+            if (!reconnecting) {
+                reconnecting = true;
+                changeAccount();
+            }
+            reconnecting = false;
         }
     }
 
