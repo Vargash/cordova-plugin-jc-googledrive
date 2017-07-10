@@ -226,8 +226,9 @@ public class GoogleDrive extends CordovaPlugin
                                     OutputStream outputStream = new FileOutputStream(destPath);//driveContents.getOutputStream();
                                     if (inputStream != null) {
                                         byte[] data = new byte[1024];
-                                        while (inputStream.read(data) != -1) {
-                                            outputStream.write(data);
+                                        int lenght;
+                                        while ((length = inputStream.read(data)) > 0) {
+                                            outputStream.write(data, 0, length);
                                         }
                                         inputStream.close();
                                     }
