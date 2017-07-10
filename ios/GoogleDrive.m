@@ -340,6 +340,7 @@ static NSString *kAuthorizerKey = @"";
 }
 
 - (void)setGtmAuthorization:(GTMAppAuthFetcherAuthorization*)authorization {
+    self.driveService.authorizer = authorization;
     if ([_authorization isEqual:authorization]) {
         return;
     }
