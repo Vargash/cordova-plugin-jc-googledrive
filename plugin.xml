@@ -54,15 +54,11 @@
                         <string name="reversedClientId">$IOS_REVERSED_CLIENT_ID</string>
                     </array>
                 </dict>
-                <dict>
-                    <key>CFBundleURLName</key>
-                    <string>clientId</string>
-                    <key>CFBundleURLSchemes</key>
-                    <array>
-                        <string name="clientId">$IOS_CLIENT_ID</string>
-                    </array>
-                </dict>
             </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="GoogleClientID">
+            <string>$IOS_CLIENT_ID</string>
         </config-file>
 
         <header-file src="ios/GoogleDrive.h"/>
